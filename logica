@@ -1,0 +1,45 @@
+let participants = ["Ana", "Juan", "María", "Carlos", "Elena"];
+let timeForPresentation = 5 * 60; // 5 minutos en segundos
+let timeForQuestions = 3 * 60; // 3 minutos en segundos
+let currentParticipant = null;
+let timerInterval = null;
+
+function startMeeting() {
+  shuffleParticipants();
+  nextParticipant();
+}
+
+function shuffleParticipants() {
+  participants = participants.sort(() => Math.random() - 0.5);
+}
+
+function nextParticipant() {
+  if (participants.length === 0) {
+    console.log("Reunión terminada");
+    return;
+  }
+  
+  currentParticipant = participants.shift();
+  console.log("Ahora es el turno de:", currentParticipant);
+  startTimer(timeForPresentation, "Presentación");
+}
+
+function startTimer(time, label) {
+  clearInterval(timerInterval);
+  let remainingTime = time;
+  console.log(`${label} para ${currentParticipant}: ${remainingTime} segundos restantes`);
+  
+  timerInterval = setInterval(() => {
+    remainingTime--;
+    console.log(`${label} para ${currentParticipant}: ${remainingTime} segundos restantes`);
+    
+    if (remainingTime <= 0) {
+      clearInterval(timerInterval);
+      if (label === "Presentación") {
+        startTimer(timeForQuestions, "Preguntas");
+      } else {
+        nextParticipant();
+      }
+    }
+  }, 1000);
+}
