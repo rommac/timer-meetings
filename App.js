@@ -38,5 +38,23 @@ function App() {
     </div>
   );
 }
+<div>
+  <label>
+    Tiempo para presentación (min):
+    <input
+      type="number"
+      value={timeForPresentation / 60}
+      onChange={(e) => setTimeForPresentation(e.target.value * 60)}
+    />
+  </label>
 
+  <label>
+    Tiempo para preguntas (min):
+    <input
+      type="number"
+      value={timeForQuestions / 60}
+      onChange={(e) => setTimeForQuestions(e.target.value * 60)}
+    />
+  </label>
+</div>
 export default App;
